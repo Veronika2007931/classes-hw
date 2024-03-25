@@ -1,21 +1,32 @@
 import {Component} from "react"
-import list from "../list.json"
+import lists from "../list.json"
 import {Task} from "./Task.jsx"
 
 
 export class TaskList extends Component{
 
     state={
-        TasksList: list
+        tasks: lists
     }
+
+    deleteTodo=(Id)=>{
+       return this.setState((prevState)=>{
+          return{
+            
+            tasks:prevState.tasks.filter(task=>task.id !== Id)
+            
+          }
+        })
+      }
 
     render(){
         return(
            <ul>
-           { list.map(({id, text})=>{return <Task 
-            key={id}
-            text={text}
-            
+           { lists.map((list)=>{return <Task 
+            key={list.id}
+            text={list.text}
+            taskId={list.id}
+           onDelete={this.deleteTodo}
             />})}
            </ul>
         )
